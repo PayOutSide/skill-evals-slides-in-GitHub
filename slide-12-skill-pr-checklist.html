@@ -40,7 +40,6 @@
                         border-radius: 30px;
                         aspect-ratio: auto;
                         overflow: hidden;
-                        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
                 }
 
                 .checklist-grid-slide .checklist-topic::after {
@@ -49,14 +48,6 @@
                         inset: 0;
                         background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent 52%);
                         pointer-events: none;
-                }
-
-                .checklist-grid-slide .checklist-topic:hover,
-                .checklist-grid-slide .checklist-topic:focus-within,
-                .checklist-grid-slide .checklist-topic.is-active {
-                        transform: translateX(10px);
-                        border-color: color-mix(in srgb, var(--title-color) 48%, var(--border));
-                        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
                 }
 
                 .checklist-grid-slide .checklist-topic-toggle {
