@@ -6,6 +6,16 @@ This repository hosts a static HTML slide deck about skill evals and review work
 
 Open [slide-01-title.html](./slide-01-title.html) in a browser to preview the deck locally.
 
+## Live presentation checklist
+
+- Open the deck in a Chromium-based browser (Edge or Chrome).
+- Ensure browser zoom is 100% before going live.
+- Use browser fullscreen mode (`F11`) before presenting.
+- Keep presenter notes on a separate display to avoid resizing the deck viewport.
+- Test once on the target screen resolution before the session starts.
+
+The deck now auto-fits a fixed 16:9 slide canvas to the available viewport, so it remains stable across different screen sizes and aspect ratios.
+
 ## Repository layout
 
 - `slide-01-title.html` through `slide-13-closing.html`: individual slides

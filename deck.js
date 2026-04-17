@@ -35,6 +35,24 @@
         const nextLink = document.querySelector('[data-nav-next]');
         let previousLink = document.querySelector('[data-nav-prev]');
 
+        function navigate(url) {
+            if (url) {
+                window.location.href = url;
+            }
+        }
+
+        function isInteractiveTarget(target) {
+            if (!(target instanceof Element)) {
+                return false;
+            }
+
+            return Boolean(
+                target.closest(
+                    'a, button, input, textarea, select, label, summary, [role="button"], [contenteditable="true"], [data-expand-toggle], [data-theme-toggle], [data-nav-next], [data-nav-prev]'
+                )
+            );
+        }
+
         if (!previousLink && slide) {
             previousLink = document.createElement('a');
             previousLink.className = 'nav-arrow nav-arrow-prev';
@@ -69,14 +87,39 @@
 
             if ((event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') && next) {
                 event.preventDefault();
-                window.location.href = next;
+                navigate(next);
             }
 
             if ((event.key === 'ArrowLeft' || event.key === 'PageUp') && previous) {
                 event.preventDefault();
-                window.location.href = previous;
+                navigate(previous);
             }
         });
+
+        if (slide) {
+            document.addEventListener('click', (event) => {
+                if (isInteractiveTarget(event.target)) {
+                    return;
+                }
+
+                const clickX = event.clientX;
+                const previousBoundary = previousLink && !previousLink.hidden
+                    ? previousLink.getBoundingClientRect().right
+                    : null;
+                const nextBoundary = nextLink && !nextLink.hidden
+                    ? nextLink.getBoundingClientRect().left
+                    : null;
+
+                if (previous && previousBoundary !== null && clickX <= previousBoundary) {
+                    navigate(previous);
+                    return;
+                }
+
+                if (next && nextBoundary !== null && clickX >= nextBoundary) {
+                    navigate(next);
+                }
+            });
+        }
     }
 
     function wireExpandableCards() {
@@ -191,8 +234,61 @@
         });
     }
 
+    function wireResponsiveScale() {
+        const slide = document.querySelector('.slide');
+        const viewport = document.querySelector('.viewport');
+        if (!slide || !viewport) {
+            return;
+        }
+
+        function updateScale() {
+            const availableWidth = viewport.clientWidth;
+            const availableHeight = viewport.clientHeight;
+            const rootStyles = getComputedStyle(document.documentElement);
+            const slideWidth = parseFloat(rootStyles.getPropertyValue('--deck-width')) || 1920;
+            const slideHeight = parseFloat(rootStyles.getPropertyValue('--deck-height')) || 1080;
+            const widthScale = availableWidth / slideWidth;
+            const heightScale = availableHeight / slideHeight;
+            const fitScale = Math.min(widthScale, heightScale);
+            const configuredBaseScale = parseFloat(rootStyles.getPropertyValue('--deck-base-scale'));
+            const baseScale = Number.isFinite(configuredBaseScale) ? configuredBaseScale : 0.65;
+            const scale = Math.min(fitScale, baseScale);
+            const clampedScale = Math.max(scale, 0.12);
+            const scaleValue = clampedScale.toFixed(4);
+
+            document.documentElement.style.setProperty('--deck-scale', scaleValue);
+        }
+
+        let pending = false;
+        function queueUpdateScale() {
+            if (pending) {
+                return;
+            }
+
+            pending = true;
+            requestAnimationFrame(() => {
+                pending = false;
+                updateScale();
+            });
+        }
+
+        updateScale();
+        window.addEventListener('resize', queueUpdateScale);
+        window.addEventListener('orientationchange', queueUpdateScale);
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', queueUpdateScale);
+            window.visualViewport.addEventListener('scroll', queueUpdateScale);
+        }
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(queueUpdateScale);
+        }
+    }
+
     loadTheme();
     document.addEventListener('DOMContentLoaded', () => {
+        wireResponsiveScale();
         wireThemeToggle();
         wireNavigation();
         wireExpandableCards();

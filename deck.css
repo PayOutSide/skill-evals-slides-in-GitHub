@@ -10,6 +10,10 @@ body {
 }
 
 :root {
+    --deck-width: 1920;
+    --deck-height: 1080;
+    --deck-base-scale: 0.65;
+    --deck-scale: var(--deck-base-scale);
     --theme-surface: linear-gradient(135deg, #1a2a35 0%, #203749 46%, #3a3d56 100%);
     --theme-title: #8fbdbc;
     --theme-button-bg: rgba(143, 189, 188, 0.14);
@@ -98,35 +102,38 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .slide {
-    width: 1920px;
-    height: 1080px;
+    width: calc(var(--deck-width) * 1px);
+    height: calc(var(--deck-height) * 1px);
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
     background: var(--surface);
     box-shadow: var(--shadow);
-    transform: scale(0.65);
+    transform: translateZ(0) scale(var(--deck-scale));
     transform-origin: center center;
+    will-change: transform;
 }
 
 @media (max-width: 1180px) {
-    .slide {
-        transform: scale(0.46);
+    :root {
+        --deck-base-scale: 0.46;
     }
 }
 
 @media (min-width: 1500px) {
-    .slide {
-        transform: scale(0.78);
+    :root {
+        --deck-base-scale: 0.78;
     }
 }
 
 @media (min-width: 2100px) {
-    .slide {
-        transform: scale(1);
+    :root {
+        --deck-base-scale: 1;
     }
 }
 
@@ -900,6 +907,7 @@ body {
     gap: 16px;
     align-content: start;
 }
+
 
 .icon-card {
     display: grid;
