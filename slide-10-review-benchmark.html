@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Outputs And Benchmark Data Together</title>
+    <link rel="stylesheet" href="deck.css">
+    <script defer src="deck.js"></script>
+</head>
+<body data-prev="slide-09-ab-workflow.html" data-next="slide-11-optimize-approve.html">
+    <!-- Template mapping: table-slide -->
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="viewport">
+        <main class="slide">
+            <div class="orb orb-top-right"></div>
+            <div class="orb orb-bottom-left"></div>
+            <div class="grain"></div>
+
+            <section class="content stack review-slide">
+                <div class="slide-number">10 / 12</div>
+                <div class="topline">How to inspect results</div>
+                <h1 class="title">Review Outputs And Benchmark Data Together</h1>
+                <p class="lead">Teams need qualitative output review and quantitative benchmarks to assess skill value.</p>
+
+                <div class="viewer-layout" style="gap: 18px;">
+                    <div class="stack" style="gap: 14px;">
+                        <div class="panel panel-muted mock-block" style="padding: 22px 24px;">
+                            <div class="section-label">Outputs</div>
+                            <ul class="mock-list">
+                                <li>Prompt text and run context for the selected eval case</li>
+                                <li>Generated files rendered inline where possible</li>
+                                <li>Formal grades from <span style="font-family: 'Cascadia Mono', Consolas, monospace;">grading.json</span></li>
+                                <li>Previous-output comparison when the prior iteration exists</li>
+                            </ul>
+                        </div>
+
+                        <div class="panel panel-glow mock-block" style="padding: 22px 24px;">
+                            <div class="section-label">Reviewer input</div>
+                            <ul class="mock-list">
+                                <li>Feedback box that persists into <span style="font-family: 'Cascadia Mono', Consolas, monospace;">feedback.json</span></li>
+                                <li>Notes about ambiguity, variance, or low-value assertions</li>
+                                <li>Human judgment layered on top of formal grading</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-strong mock-block" style="padding: 22px 24px;">
+                        <div class="section-label">Benchmark</div>
+                        <table class="benchmark-table">
+                            <thead>
+                                <tr>
+                                    <th>Config</th>
+                                    <th>Run</th>
+                                    <th>Pass Rate</th>
+                                    <th>P/F/T</th>
+                                    <th>Time (s)</th>
+                                    <th>Tokens</th>
+                                    <th>Tool Calls</th>
+                                    <th>Errors</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="row-with">
+                                    <td>with_skill</td>
+                                    <td>1</td>
+                                    <td>100%</td>
+                                    <td>5/0/5</td>
+                                    <td>41.8</td>
+                                    <td>3820</td>
+                                    <td>18</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="row-with">
+                                    <td>with_skill</td>
+                                    <td>2</td>
+                                    <td>80%</td>
+                                    <td>4/1/5</td>
+                                    <td>39.6</td>
+                                    <td>3650</td>
+                                    <td>17</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="row-avg">
+                                    <td>with_skill</td>
+                                    <td>Avg</td>
+                                    <td>90%</td>
+                                    <td>4.5/0.5/5</td>
+                                    <td>40.7</td>
+                                    <td>3735</td>
+                                    <td>17.5</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr class="row-without">
+                                    <td>without_skill</td>
+                                    <td>1</td>
+                                    <td>40%</td>
+                                    <td>2/3/5</td>
+                                    <td>27.4</td>
+                                    <td>2150</td>
+                                    <td>10</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="row-without">
+                                    <td>without_skill</td>
+                                    <td>2</td>
+                                    <td>20%</td>
+                                    <td>1/4/5</td>
+                                    <td>25.9</td>
+                                    <td>2070</td>
+                                    <td>9</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr class="row-avg">
+                                    <td>without_skill</td>
+                                    <td>Avg</td>
+                                    <td>30%</td>
+                                    <td>1.5/3.5/5</td>
+                                    <td>26.7</td>
+                                    <td>2110</td>
+                                    <td>9.5</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="delta-row" style="margin-top: 12px;">
+                            <span class="delta-pill">+60 pts pass rate</span>
+                            <span class="delta-pill">+14.0s time</span>
+                            <span class="delta-pill">+1625 tokens</span>
+                        </div>
+
+                        <div class="panel panel-muted" style="margin-top: 12px; padding: 14px 18px;">
+                            <div class="section-label">Analyzer notes</div>
+                            <p class="small-note">Higher success and stronger behavior, but at an increased execution cost that now becomes visible and discussable.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="brand">
+                    <img src="assets/payoneer-mark.svg" alt="">
+                    <span class="brand-name">Payoneer</span>
+                </div>
+                <span class="footer-note">Qualitative review plus quantitative deltas</span>
+            </footer>
+
+            <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+            </a>
+        </main>
+    </div>
+</body>
+</html>
+
+

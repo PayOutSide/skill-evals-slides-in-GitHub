@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every Eval Leaves Reviewable Artifacts</title>
+    <link rel="stylesheet" href="deck.css">
+    <script defer src="deck.js"></script>
+</head>
+<body data-prev="slide-07-coverage-grid.html" data-next="slide-09-ab-workflow.html">
+    <!-- Template mapping: architecture-slide -->
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="viewport">
+        <main class="slide">
+            <div class="orb orb-top-right"></div>
+            <div class="orb orb-bottom-left"></div>
+            <div class="grain"></div>
+
+            <section class="content stack">
+                <div class="slide-number">08 / 12</div>
+                <div class="topline">Evidence package</div>
+                <h1 class="title">Every Eval Leaves Reviewable Artifacts</h1>
+                <p class="lead">Outputs survive the run so teams can inspect metadata, timing, and benchmarks later.</p>
+
+                <div class="artifact-layout">
+                    <div class="panel panel-strong tree-card artifact-tree">
+                        <div class="section-label">Iteration output tree</div>
+                        <pre>my-skill-workspace/
+└── iteration-1/
+    ├── plan-before-approval/
+    │   ├── eval_metadata.json
+    │   ├── with_skill/
+    │   │   ├── outputs/
+    │   │   │   └── metrics.json
+    │   │   ├── timing.json
+    │   │   └── grading.json
+    │   └── without_skill/
+    │       ├── outputs/
+    │       │   └── metrics.json
+    │       ├── timing.json
+    │       └── grading.json
+    ├── benchmark.json
+    ├── benchmark.md
+    └── feedback.json</pre>
+                        <p class="tree-caption" style="margin-top: 12px;">Runs live outside the skill repo. Keep the benchmark, document the findings, then clean up the workspace.</p>
+                    </div>
+
+                    <div class="stack artifact-stack">
+                        <div class="callout-grid">
+                            <article class="panel callout-card">
+                                <h3><span style="font-family: 'Cascadia Mono', Consolas, monospace;">eval_metadata.json</span></h3>
+                                <p>Prompt metadata, case identity, and run context that make the execution traceable.</p>
+                            </article>
+                            <article class="panel callout-card">
+                                <h3>Separate skill and baseline outputs</h3>
+                                <p>Keep generated files, timing, and grading isolated for each configuration, outside the reusable skill package.</p>
+                            </article>
+                            <article class="panel callout-card">
+                                <h3>Iteration summary artifacts</h3>
+                                <p>Combine metrics, timing, benchmark deltas, and reviewer feedback into a clean iteration summary.</p>
+                            </article>
+                            <article class="panel callout-card">
+                                <h3>Parallel iterations</h3>
+                                <p>Each eval can run in parallel multiple times and compare. These runs belong outside the skill's source files—just run, evaluate, and clean up.</p>
+                            </article>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="brand">
+                    <img src="assets/payoneer-mark.svg" alt="">
+                    <span class="brand-name">Payoneer</span>
+                </div>
+                <span class="footer-note">Traceability over one-off screenshots</span>
+            </footer>
+
+            <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+            </a>
+        </main>
+    </div>
+</body>
+</html>
+
+

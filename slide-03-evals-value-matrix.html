@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Evals Add</title>
+    <link rel="stylesheet" href="deck.css">
+    <script defer src="deck.js"></script>
+</head>
+<body data-prev="slide-02-confidence-gap.html" data-next="slide-04-source-assets.html">
+    <!-- Template mapping: table-slide -->
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="viewport">
+        <main class="slide">
+            <div class="orb orb-top-right"></div>
+            <div class="orb orb-bottom-left"></div>
+            <div class="grain"></div>
+
+            <section class="content stack">
+                <div class="slide-number">03 / 12</div>
+                <div class="topline">Value framing</div>
+                <h1 class="title">What Evals Add</h1>
+                <p class="lead">Evals turn intuition into evidence-based engineering with visible boundaries.</p>
+
+                <div class="comparison panel panel-muted" style="padding: 0;">
+                    <div class="comparison-row header">
+                        <div class="comparison-cell header-text">Dimension</div>
+                        <div class="comparison-cell header-text">What we usually have today</div>
+                        <div class="comparison-cell header-text">What evals add</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Confidence</div>
+                        <div class="comparison-cell current">Gut feel after a few runs</div>
+                        <div class="comparison-cell evals">Measured pass and fail evidence across cases</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Skill value</div>
+                        <div class="comparison-cell current">Hard to prove that the skill helps</div>
+                        <div class="comparison-cell evals">A/B comparison with and without the skill</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Reference usage</div>
+                        <div class="comparison-cell current">References get skipped or applied inconsistently</div>
+                        <div class="comparison-cell evals">Verifies required references are used</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Scope control</div>
+                        <div class="comparison-cell current">Unknown drift and weak guardrails</div>
+                        <div class="comparison-cell evals">Explicit out-of-scope checks and refusal cases</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Coverage</div>
+                        <div class="comparison-cell current">Two or three examples</div>
+                        <div class="comparison-cell evals">Positive, negative, regression, and extension coverage</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Cost and timing</div>
+                        <div class="comparison-cell current">Guessed or ignored</div>
+                        <div class="comparison-cell evals">Measured time, tokens, tool calls, and errors</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell criteria">Iteration quality</div>
+                        <div class="comparison-cell current">Changes are hard to compare between versions</div>
+                        <div class="comparison-cell evals">Clear evidence for each iteration</div>
+                    </div>
+                </div>
+
+                <div class="banner-note">Evals show whether a skill helps, stays in scope, and justifies its added cost.</div>
+            </section>
+
+            <footer class="footer">
+                <div class="brand">
+                    <img src="assets/payoneer-mark.svg" alt="">
+                    <span class="brand-name">Payoneer</span>
+                </div>
+                <span class="footer-note">Move from intuition to deltas</span>
+            </footer>
+
+            <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+            </a>
+        </main>
+    </div>
+</body>
+</html>
+
+

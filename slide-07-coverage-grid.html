@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Behavior, Boundaries, And Reuse</title>
+    <link rel="stylesheet" href="deck.css">
+    <script defer src="deck.js"></script>
+</head>
+<body data-prev="slide-06-evals-json.html" data-next="slide-08-run-artifacts.html">
+    <!-- Template mapping: icon-grid-slide -->
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="viewport">
+        <main class="slide">
+            <div class="orb orb-top-right"></div>
+            <div class="orb orb-bottom-left"></div>
+            <div class="grain"></div>
+
+            <section class="content stack">
+                <div class="slide-number">07 / 12</div>
+                <div class="topline">Quality bar</div>
+                <h1 class="title">Test Behavior, Boundaries, And Reuse</h1>
+                <p class="lead">A genuine eval suite proves happy-path success, true behavior, and scope boundaries.</p>
+
+                <div class="icon-grid">
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">P</div>
+                        <div class="icon-copy">
+                            <h3>Positive</h3>
+                            <ul class="icon-bullets">
+                                <li>Triggers correctly and produces expected results</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">N</div>
+                        <div class="icon-copy">
+                            <h3>Negative</h3>
+                            <ul class="icon-bullets">
+                                <li>Refuses or redirects out-of-scope requests</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">G</div>
+                        <div class="icon-copy">
+                            <h3>Guardrail</h3>
+                            <ul class="icon-bullets">
+                                <li>Stop gates and workflows are not bypassed</li>
+                                <li>Out-of-scope work is refused</li>
+                                <li>Required questions are asked in order</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">R</div>
+                        <div class="icon-copy">
+                            <h3>Regression</h3>
+                            <ul class="icon-bullets">
+                                <li>Previously solved cases keep passing</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">E</div>
+                        <div class="icon-copy">
+                            <h3>Extension</h3>
+                            <ul class="icon-bullets">
+                                <li>Can add capabilities without breaking core logic</li>
+                                <li>Uses <code>references/</code> and <code>templates/</code> correctly</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="panel icon-card">
+                        <div class="icon-symbol">M</div>
+                        <div class="icon-copy">
+                            <h3>Minimal change</h3>
+                            <ul class="icon-bullets">
+                                <li>Avoids unnecessary edits and extra work</li>
+                                <li>Keeps changes strictly within scope</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="brand">
+                    <img src="assets/payoneer-mark.svg" alt="">
+                    <span class="brand-name">Payoneer</span>
+                </div>
+                <span class="footer-note">Behavior plus boundaries</span>
+            </footer>
+
+            <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+            </a>
+        </main>
+    </div>
+</body>
+</html>
+
+
