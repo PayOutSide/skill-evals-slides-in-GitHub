@@ -1,0 +1,38 @@
+﻿<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0a2f35"/>
+            <stop offset="50%" style="stop-color:#0f1e3d"/>
+            <stop offset="100%" style="stop-color:#1a1438"/>
+        </linearGradient>
+        <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0099e6"/>
+            <stop offset="50%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#e94b9e"/>
+        </linearGradient>
+        <linearGradient id="blobGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#10b981"/>
+            <stop offset="100%" style="stop-color:#14b8a6"/>
+        </linearGradient>
+        <linearGradient id="blobGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#a855f7"/>
+        </linearGradient>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="512" height="512" rx="96" fill="url(#bgGrad)"/>
+    
+    <!-- Decorative blobs -->
+    <circle cx="80" cy="80" r="120" fill="url(#blobGrad1)" opacity="0.3"/>
+    <circle cx="432" cy="432" r="140" fill="url(#blobGrad2)" opacity="0.3"/>
+    
+    <!-- Play/Present icon -->
+    <g transform="translate(256, 256)">
+        <circle cx="0" cy="0" r="140" stroke="url(#accentGrad)" stroke-width="8" fill="none"/>
+        <path d="M-40 -60 L60 0 L-40 60 Z" fill="url(#accentGrad)"/>
+    </g>
+    
+    <!-- PayoPoint text -->
+    <text x="256" y="480" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle" opacity="0.8">PayoPoint</text>
+</svg>

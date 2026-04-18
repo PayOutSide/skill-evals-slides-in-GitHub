@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script data-deck-bootstrap>
+        (() => {
+            const root = document.documentElement;
+            const savedTheme = localStorage.getItem('payopoint-theme') || localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                root.classList.add('light-mode');
+            }
+        })();
+    </script>
+    <title>What The Eval Review Looks Like After A Run</title>
+    <link rel="stylesheet" href="deck.css">
+    <script defer src="deck.js"></script>
+    <style>
+        .gallery-slide .carousel {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-slide .carousel-viewport {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-slide .carousel-item {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-slide .carousel-item.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gallery-slide .carousel-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top left;
+        }
+
+        .gallery-slide .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 18px 24px;
+            background: linear-gradient(0deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.0) 100%);
+            color: #f3f4f6;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .gallery-slide .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 16px 0 0;
+        }
+
+        .gallery-slide .carousel-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .gallery-slide .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--text-3);
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .gallery-slide .carousel-dot.active {
+            background: var(--title-color);
+            border-color: var(--title-color);
+        }
+
+        .gallery-slide .carousel-dot:hover {
+            border-color: var(--title-color);
+        }
+
+        .gallery-slide .carousel-counter {
+            color: var(--text-3);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            min-width: 52px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body data-prev="slide-10-review-benchmark.html" data-next="slide-12-optimize-approve.html">
+    <!-- Template mapping: image-slide (asymmetric gallery approximation) -->
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="viewport">
+        <main class="slide">
+            <div class="orb orb-top-right"></div>
+            <div class="orb orb-bottom-left"></div>
+            <div class="grain"></div>
+
+            <section class="content stack gallery-slide" style="padding-top: 52px; padding-bottom: 80px; gap: 14px;">
+                <div class="slide-number">11 / 14</div>
+                <div class="topline">Actual review UI</div>
+                <h1 class="title">What The Eval Review Looks Like After A Run</h1>
+                <p class="lead">The viewer combines qualitative output review with benchmark deltas for the same skill run.</p>
+
+                <div class="carousel" data-carousel>
+                    <div class="carousel-viewport">
+                        <div class="carousel-item active">
+                            <img src="assets/review-gallery/slide-1-outputs-plan.png" alt="Outputs tab showing the implementation plan for the MongoDB outbox pattern skill">
+                            <div class="carousel-caption">Outputs: prompt and implementation plan</div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/review-gallery/slide-2-formal-grades.png" alt="Formal Grades section showing pass/fail assertions with evidence for each expectation">
+                            <div class="carousel-caption">Formal grades and reviewer feedback</div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/review-gallery/slide-3-benchmark-summary.png" alt="Benchmark Results summary table comparing with-skill and without-skill pass rate, time, and tokens">
+                            <div class="carousel-caption">Benchmark summary: pass rate, time, and tokens</div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/review-gallery/slide-4-benchmark-detail.png" alt="Benchmark per-eval assertions and analysis notes showing skill enforcement patterns">
+                            <div class="carousel-caption">Per-eval assertions and analysis notes</div>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <div class="carousel-dots">
+                            <button class="carousel-dot active" data-carousel-dot="0" aria-label="Show image 1"></button>
+                            <button class="carousel-dot" data-carousel-dot="1" aria-label="Show image 2"></button>
+                            <button class="carousel-dot" data-carousel-dot="2" aria-label="Show image 3"></button>
+                            <button class="carousel-dot" data-carousel-dot="3" aria-label="Show image 4"></button>
+                        </div>
+                        <span class="carousel-counter">1 / 4</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="brand">
+                    <img src="assets/payoneer-mark.svg" alt="">
+                    <span class="brand-name">Payoneer</span>
+                </div>
+                <span class="footer-note">Real results from a real skill run</span>
+            </footer>
+
+            <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+            </a>
+        </main>
+    </div>
+    <script>
+        (() => {
+            const carousel = document.querySelector('[data-carousel]');
+            if (!carousel) return;
+            const items = carousel.querySelectorAll('.carousel-item');
+            const dots = carousel.querySelectorAll('[data-carousel-dot]');
+            const counter = carousel.querySelector('.carousel-counter');
+            let current = 0;
+
+            function show(index) {
+                items[current].classList.remove('active');
+                dots[current].classList.remove('active');
+                current = (index + items.length) % items.length;
+                items[current].classList.add('active');
+                dots[current].classList.add('active');
+                counter.textContent = (current + 1) + ' / ' + items.length;
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => show(Number(dot.dataset.carouselDot)));
+            });
+
+            carousel.addEventListener('click', e => {
+                const rect = carousel.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                if (e.target.closest('[data-carousel-dot]') || e.target.closest('.carousel-proof')) return;
+                if (x > rect.width * 0.5) show(current + 1);
+                else show(current - 1);
+            });
+        })();
+    </script>
+</body>
+</html>

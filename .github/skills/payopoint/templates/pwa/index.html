@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="{{PRESENTATION_TITLE}} - Payoneer Presentation">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PayoPoint">
+    <title>{{PRESENTATION_TITLE}}</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
+
+        :root {
+            --body-bg: #0a0e1a;
+            --text-color: #ffffff;
+            --accent-gradient: linear-gradient(135deg, #0099e6 0%, #8b5cf6 50%, #e94b9e 100%);
+        }
+
+        :root.light-mode {
+            --body-bg: #e5e7eb;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--body-bg);
+            transition: background 0.3s ease;
+        }
+
+        .presentation { width: 100%; height: 100%; position: relative; }
+
+        .slides-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+
+        .slide-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            outline: none;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+            background: var(--body-bg);
+        }
+
+        .slide-frame.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .slide-frame.prev { transform: translateX(-100%); opacity: 0; }
+        .slide-frame.next { transform: translateX(100%); opacity: 0; }
+
+        /* Navigation Controls */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 12px 24px;
+        }
+
+        :root.light-mode .nav-controls {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .nav-btn svg { width: 24px; height: 24px; fill: white; }
+
+        .slide-counter {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-color);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+        }
+
+        :root.light-mode .progress-bar { background: rgba(0, 0, 0, 0.1); }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); }
+        :root.light-mode .theme-toggle { background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.2); }
+        :root.light-mode .theme-toggle:hover { background: rgba(0, 0, 0, 0.15); }
+
+        .theme-toggle-label { font-size: 14px; font-weight: 500; color: #ffffff; user-select: none; }
+        :root.light-mode .theme-toggle-label { color: #1f2937; }
+
+        .toggle-track {
+            width: 48px;
+            height: 26px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 13px;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        :root.light-mode .toggle-track { background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%); }
+
+        .toggle-thumb {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        :root.light-mode .toggle-thumb { transform: translateX(22px); }
+
+        .toggle-icon { width: 14px; height: 14px; }
+        .icon-moon { display: block; }
+        .icon-sun { display: none; }
+        :root.light-mode .icon-moon { display: none; }
+        :root.light-mode .icon-sun { display: block; }
+
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 180px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        :root.light-mode .fullscreen-btn { background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.2); }
+        .fullscreen-btn svg { width: 20px; height: 20px; fill: white; }
+        :root.light-mode .fullscreen-btn svg { fill: #1f2937; }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--body-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+
+        .loading-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .loading-text {
+            font-size: 24px;
+            font-weight: 600;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Keyboard Shortcuts Help */
+        .shortcuts-help {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 24px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .shortcuts-help.visible { opacity: 1; }
+        :root.light-mode .shortcuts-help { background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.2); }
+        .shortcuts-help span { color: var(--text-color); font-size: 14px; margin: 0 15px; }
+        .shortcuts-help kbd { background: rgba(255, 255, 255, 0.2); padding: 4px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+        :root.light-mode .shortcuts-help kbd { background: rgba(0, 0, 0, 0.15); }
+
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            top: 20px;
+            left: 80px;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+            display: none;
+            transition: transform 0.2s ease;
+        }
+
+        .install-prompt:hover { transform: scale(1.05); }
+        .install-prompt.show { display: flex; align-items: center; gap: 8px; }
+
+        .install-prompt .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .install-prompt .close-btn:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <svg class="loading-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" stroke="url(#grad)" stroke-width="6" fill="none"/>
+            <path d="M30 50 L45 65 L70 35" stroke="url(#grad)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#0099e6"/>
+                    <stop offset="50%" style="stop-color:#8b5cf6"/>
+                    <stop offset="100%" style="stop-color:#e94b9e"/>
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="loading-text">Loading Presentation...</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <span class="theme-toggle-label">Theme</span>
+        <div class="toggle-track">
+            <div class="toggle-thumb">
+                <svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="#3b82f6">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="#f97316">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="12" y1="21" x2="12" y2="23" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="1" y1="12" x2="3" y2="12" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="21" y1="12" x2="23" y2="12" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Button -->
+    <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Toggle Fullscreen (F)">
+        <svg viewBox="0 0 24 24">
+            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
+    </button>
+
+    <!-- Presentation -->
+    <div class="presentation">
+        <div class="slides-container" id="slidesContainer">
+            <!-- Slides will be loaded as iframes -->
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()" title="Previous (Left Arrow)">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+            </svg>
+        </button>
+        <span class="slide-counter" id="slideCounter">1 / {{TOTAL_SLIDES}}</span>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()" title="Next (Right Arrow)">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Keyboard Shortcuts Help -->
+    <div class="shortcuts-help" id="shortcutsHelp">
+        <span><kbd>Left</kbd> Previous</span>
+        <span><kbd>Right</kbd> Next</span>
+        <span><kbd>F</kbd> Fullscreen</span>
+        <span><kbd>T</kbd> Theme</span>
+        <span><kbd>?</kbd> Help</span>
+    </div>
+
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <span onclick="installApp()">≡ƒô▒ Install as App</span>
+        <button class="close-btn" onclick="dismissInstall(event)">├ù</button>
+    </div>
+
+    <script>
+        // SLIDES_CONFIG: Update this array with your slide filenames
+        const slides = [
+            {{SLIDES_ARRAY}}
+        ];
+
+        // CSS to inject into slides to hide duplicate controls
+        const hideControlsCSS = `
+            .theme-toggle, .nav-arrow, .nav-arrow-prev, .nav-arrow-next,
+            .sidebar-toggle, .sidebar {
+                display: none !important;
+            }
+            .slide {
+                transform: none !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+            }
+            .slide-wrapper {
+                width: 100vw !important;
+                height: 100vh !important;
+            }
+            body {
+                overflow: hidden !important;
+            }
+        `;
+
+        let currentSlide = 0;
+        let deferredPrompt = null;
+
+        function initPresentation() {
+            const container = document.getElementById('slidesContainer');
+            
+            slides.forEach((slide, index) => {
+                const iframe = document.createElement('iframe');
+                iframe.src = slide;
+                iframe.className = 'slide-frame' + (index === 0 ? ' active' : '');
+                iframe.id = `slide-${index}`;
+                iframe.setAttribute('loading', index < 2 ? 'eager' : 'lazy');
+                
+                iframe.onload = () => {
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const style = iframeDoc.createElement('style');
+                        style.textContent = hideControlsCSS;
+                        iframeDoc.head.appendChild(style);
+                        syncThemeToIframe(iframe);
+                    } catch (e) {
+                        console.log('Cannot inject CSS (cross-origin):', e);
+                    }
+                };
+                
+                container.appendChild(iframe);
+            });
+
+            updateUI();
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1000);
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                const prevFrame = document.getElementById(`slide-${currentSlide}`);
+                prevFrame.classList.remove('active');
+                prevFrame.classList.add('prev');
+                currentSlide++;
+                const nextFrame = document.getElementById(`slide-${currentSlide}`);
+                nextFrame.classList.remove('next');
+                nextFrame.classList.add('active');
+                updateUI();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                const nextFrame = document.getElementById(`slide-${currentSlide}`);
+                nextFrame.classList.remove('active');
+                nextFrame.classList.add('next');
+                currentSlide--;
+                const prevFrame = document.getElementById(`slide-${currentSlide}`);
+                prevFrame.classList.remove('prev');
+                prevFrame.classList.add('active');
+                updateUI();
+            }
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < slides.length && index !== currentSlide) {
+                const oldFrame = document.getElementById(`slide-${currentSlide}`);
+                oldFrame.classList.remove('active');
+                oldFrame.classList.add(index > currentSlide ? 'prev' : 'next');
+                currentSlide = index;
+                const newFrame = document.getElementById(`slide-${currentSlide}`);
+                newFrame.classList.remove('prev', 'next');
+                newFrame.classList.add('active');
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${slides.length}`;
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
+            syncThemeWithSlides();
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.documentElement.classList.contains('light-mode') ? 'light' : 'dark');
+            syncThemeWithSlides();
+        }
+
+        function syncThemeToIframe(iframe) {
+            const isLightMode = document.documentElement.classList.contains('light-mode');
+            try {
+                if (iframe.contentDocument) {
+                    if (isLightMode) {
+                        iframe.contentDocument.documentElement.classList.add('light-mode');
+                    } else {
+                        iframe.contentDocument.documentElement.classList.remove('light-mode');
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function syncThemeWithSlides() {
+            slides.forEach((_, index) => {
+                const iframe = document.getElementById(`slide-${index}`);
+                syncThemeToIframe(iframe);
+            });
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function toggleShortcutsHelp() {
+            const help = document.getElementById('shortcutsHelp');
+            help.classList.toggle('visible');
+            setTimeout(() => help.classList.remove('visible'), 3000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); nextSlide(); break;
+                case 'ArrowLeft': case 'PageUp': e.preventDefault(); previousSlide(); break;
+                case 'Home': e.preventDefault(); goToSlide(0); break;
+                case 'End': e.preventDefault(); goToSlide(slides.length - 1); break;
+                case 'f': case 'F': toggleFullscreen(); break;
+                case 't': case 'T': toggleTheme(); break;
+                case '?': toggleShortcutsHelp(); break;
+            }
+        });
+
+        let touchStartX = 0, touchEndX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, false);
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : previousSlide(); }
+        }, false);
+
+        document.addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); }
+        });
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').classList.remove('show');
+                });
+            }
+        }
+
+        function dismissInstall(event) {
+            event.stopPropagation();
+            document.getElementById('installPrompt').classList.remove('show');
+        }
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch((error) => {
+                console.log('ServiceWorker registration failed:', error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initPresentation);
+    </script>
+</body>
+</html>

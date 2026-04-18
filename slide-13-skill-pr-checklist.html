@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+            <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script data-deck-bootstrap>
+        (() => {
+            const root = document.documentElement;
+            const savedTheme = localStorage.getItem('payopoint-theme') || localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                root.classList.add('light-mode');
+            }
+        })();
+    </script>
+    <title>Skill PR Checklist By Review Area</title>
+        <link rel="stylesheet" href="deck.css">
+        <style>
+                .checklist-grid-slide {
+                        gap: 18px;
+                }
+
+                .checklist-grid-slide .lead {
+                        max-width: 1120px;
+                }
+
+                .checklist-grid-slide .checklist-workbench {
+                        display: grid;
+                        grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
+                        gap: 24px;
+                        align-items: stretch;
+                        flex: 1;
+                        min-height: 0;
+                }
+
+                .checklist-grid-slide .checklist-list {
+                        display: grid;
+                        grid-template-columns: 1fr;
+                        grid-auto-rows: max-content;
+                        gap: 0;
+                        align-content: space-between;
+                        height: 100%;
+                }
+
+                .checklist-grid-slide .checklist-topic {
+                        position: relative;
+                        min-height: 0;
+                        height: auto;
+                        padding: 0;
+                        border-radius: 30px;
+                        aspect-ratio: auto;
+                        overflow: hidden;
+                }
+
+                .checklist-grid-slide .checklist-topic::after {
+                        content: '';
+                        position: absolute;
+                        inset: 0;
+                        background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent 52%);
+                        pointer-events: none;
+                }
+
+                .checklist-grid-slide .checklist-topic-toggle {
+                        position: relative;
+                        z-index: 1;
+                        width: 100%;
+                        height: auto;
+                        min-height: 0;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: flex-start;
+                        gap: 14px;
+                        padding: 10px 16px;
+                        background: transparent;
+                        border: 0;
+                        color: inherit;
+                        font: inherit;
+                        text-align: left;
+                        cursor: pointer;
+                }
+
+                .checklist-grid-slide .checklist-topic-toggle:focus-visible {
+                        outline: 2px solid color-mix(in srgb, var(--title-color) 70%, white);
+                        outline-offset: -2px;
+                }
+
+                .checklist-grid-slide .checklist-topic-tag {
+                        flex: 0 0 180px;
+                        justify-content: center;
+                        max-width: 180px;
+                        padding: 8px 18px;
+                        font-size: 11px;
+                        line-height: 1.1;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                }
+
+                .checklist-grid-slide .checklist-topic-summary {
+                        margin: 0;
+                        min-width: 0;
+                        color: var(--text-2);
+                        font-size: 18px;
+                        line-height: 1.18;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                }
+
+                .checklist-grid-slide .checklist-topic-body,
+                .checklist-grid-slide .checklist-topic-header,
+                .checklist-grid-slide .checklist-subsection {
+                        display: contents;
+                }
+
+                .checklist-grid-slide .checklist-detail {
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        min-height: 0;
+                        padding: 28px 30px 30px;
+                        border-radius: 34px;
+                        overflow: hidden;
+                }
+
+                .checklist-grid-slide .checklist-detail::before {
+                        content: '';
+                        position: absolute;
+                        inset: 0;
+                        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 58%);
+                        pointer-events: none;
+                }
+
+                .checklist-grid-slide .checklist-detail-shell {
+                        position: relative;
+                        z-index: 1;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                        height: 100%;
+                        min-height: 0;
+                }
+
+                .checklist-grid-slide .checklist-detail-kicker {
+                        margin: 0;
+                        color: var(--text-3);
+                        font-size: 14px;
+                        font-weight: 700;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                        display: none;
+                }
+
+                .checklist-grid-slide .checklist-detail-top {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 16px;
+                        padding-top: 2px;
+                }
+
+                .checklist-grid-slide .checklist-detail-index {
+                        flex: 0 0 auto;
+                        color: var(--title-color);
+                        font-family: 'Avenir Next LT Pro Demi', 'Avenir Next LT Pro', 'Avenir Next', sans-serif;
+                        font-size: 18px;
+                        letter-spacing: 0.08em;
+                        text-transform: uppercase;
+                }
+
+                .checklist-grid-slide .checklist-detail-question {
+                        margin: 0;
+                        color: var(--text);
+                        font-size: 31px;
+                        line-height: 1.18;
+                        letter-spacing: -0.025em;
+                }
+
+                .checklist-grid-slide .checklist-detail-content {
+                        min-height: 0;
+                        overflow: auto;
+                        padding-right: 8px;
+                }
+
+                .checklist-grid-slide .checklist-detail-content::-webkit-scrollbar {
+                        width: 8px;
+                }
+
+                .checklist-grid-slide .checklist-detail-content::-webkit-scrollbar-thumb {
+                        background: rgba(255, 255, 255, 0.18);
+                        border-radius: 999px;
+                }
+
+                .checklist-grid-slide .checklist-detail-list {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        display: grid;
+                        gap: 12px;
+                }
+
+                .checklist-grid-slide .checklist-detail-list li {
+                        position: relative;
+                        padding: 0 0 0 22px;
+                        color: var(--text-2);
+                        font-size: 20px;
+                        line-height: 1.34;
+                }
+
+                .checklist-grid-slide .checklist-detail-list li::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 11px;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 999px;
+                        background: linear-gradient(135deg, var(--accent-orange), var(--accent-cyan));
+                }
+
+                .checklist-grid-slide .checklist-detail-columns {
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 18px;
+                }
+
+                .checklist-grid-slide .checklist-detail-section {
+                        display: grid;
+                        gap: 10px;
+                        padding: 18px 18px 20px;
+                        border-radius: 24px;
+                        background: rgba(255, 255, 255, 0.04);
+                        border: 1px solid rgba(255, 255, 255, 0.08);
+                }
+
+                .checklist-grid-slide .checklist-detail-section-title {
+                        margin: 0;
+                        color: var(--title-color);
+                        font-size: 14px;
+                        font-weight: 800;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                }
+
+                .checklist-grid-slide .checklist-detail-empty {
+                        margin: auto 0;
+                        color: var(--text-3);
+                        font-size: 24px;
+                        line-height: 1.4;
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-cyan,
+                .checklist-grid-slide .checklist-detail.theme-cyan {
+                        background:
+                                linear-gradient(180deg, rgba(0, 153, 230, 0.12), rgba(0, 153, 230, 0.03)),
+                                var(--panel-strong);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-teal,
+                .checklist-grid-slide .checklist-detail.theme-teal {
+                        background:
+                                linear-gradient(180deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03)),
+                                var(--panel);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-orange,
+                .checklist-grid-slide .checklist-detail.theme-orange {
+                        background:
+                                linear-gradient(180deg, rgba(255, 138, 61, 0.14), rgba(255, 138, 61, 0.03)),
+                                var(--panel);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-pink,
+                .checklist-grid-slide .checklist-detail.theme-pink {
+                        background:
+                                linear-gradient(180deg, rgba(233, 75, 158, 0.12), rgba(233, 75, 158, 0.03)),
+                                var(--panel);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-purple,
+                .checklist-grid-slide .checklist-detail.theme-purple {
+                        background:
+                                linear-gradient(180deg, rgba(139, 92, 246, 0.14), rgba(139, 92, 246, 0.03)),
+                                var(--panel);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-gold,
+                .checklist-grid-slide .checklist-detail.theme-gold {
+                        background:
+                                linear-gradient(180deg, rgba(251, 191, 36, 0.14), rgba(251, 191, 36, 0.03)),
+                                var(--panel);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-slate,
+                .checklist-grid-slide .checklist-detail.theme-slate {
+                        background:
+                                linear-gradient(180deg, rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.04)),
+                                var(--panel-strong);
+                }
+
+                .checklist-grid-slide .checklist-topic.theme-rose,
+                .checklist-grid-slide .checklist-detail.theme-rose {
+                        background:
+                                linear-gradient(180deg, rgba(244, 114, 182, 0.12), rgba(244, 114, 182, 0.03)),
+                                var(--panel);
+                }
+
+                @media (max-width: 1500px) {
+                        .checklist-grid-slide .checklist-workbench {
+                                grid-template-columns: minmax(0, 720px) minmax(0, 1fr);
+                        }
+                }
+
+                :root.light-mode .checklist-grid-slide .checklist-detail-section {
+                        background: rgba(255, 255, 255, 0.7);
+                        border-color: rgba(0, 0, 0, 0.06);
+                }
+
+                :root.light-mode .checklist-grid-slide .checklist-topic-tag {
+                        background: rgba(0, 0, 0, 0.04);
+                        border-color: rgba(0, 0, 0, 0.1);
+                }
+        </style>
+        <script defer src="deck.js"></script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                        const workbench = document.querySelector('[data-checklist-workbench]');
+                        if (!workbench) {
+                                return;
+                        }
+
+                        const cards = Array.from(workbench.querySelectorAll('[data-detail-card]'));
+                        const panel = workbench.querySelector('[data-detail-panel]');
+
+                                if (!cards.length || !panel) {
+                                return;
+                        }
+
+                        const themeClasses = ['theme-cyan', 'theme-teal', 'theme-orange', 'theme-pink', 'theme-purple', 'theme-gold', 'theme-slate', 'theme-rose'];
+
+                        function setActiveCard(card) {
+                                cards.forEach((item, index) => {
+                                        const isActive = item === card;
+                                        const trigger = item.querySelector('[data-detail-trigger]');
+                                        item.classList.toggle('is-active', isActive);
+                                        if (trigger) {
+                                                trigger.setAttribute('aria-pressed', String(isActive));
+                                                trigger.setAttribute('tabindex', isActive || index === 0 ? '0' : '-1');
+                                        }
+                                });
+
+                                const template = card.querySelector('template');
+                                if (template) {
+                                                panel.innerHTML = template.innerHTML;
+                                }
+
+                                panel.classList.remove(...themeClasses, 'panel-strong');
+                                themeClasses.forEach((themeClass) => {
+                                        if (card.classList.contains(themeClass)) {
+                                                panel.classList.add(themeClass);
+                                        }
+                                });
+
+                                if (card.classList.contains('panel-strong')) {
+                                        panel.classList.add('panel-strong');
+                                }
+                        }
+
+                        cards.forEach((card) => {
+                                const trigger = card.querySelector('[data-detail-trigger]');
+                                if (!trigger) {
+                                        return;
+                                }
+
+                                card.addEventListener('mouseenter', () => setActiveCard(card));
+                                trigger.addEventListener('focus', () => setActiveCard(card));
+                                trigger.addEventListener('click', () => setActiveCard(card));
+                        });
+
+                        setActiveCard(cards[0]);
+                });
+        </script>
+</head>
+<body data-prev="slide-12-optimize-approve.html" data-next="slide-14-closing.html">
+        <!-- Template mapping: icon-grid-slide -->
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
+                <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
+                <svg class="sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#F7A63B" stroke="#F7A63B" stroke-width="1.6"/><path d="M12 1.8V4.2M12 19.8V22.2M4.08 4.08L5.78 5.78M18.22 18.22L19.92 19.92M1.8 12H4.2M19.8 12H22.2M4.08 19.92L5.78 18.22M18.22 5.78L19.92 4.08" stroke="#F7A63B" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+
+        <div class="viewport">
+                <main class="slide">
+                        <div class="orb orb-top-right"></div>
+                        <div class="orb orb-bottom-left"></div>
+                        <div class="grain"></div>
+
+                        <section class="content stack checklist-grid-slide">
+                                <div class="slide-number">13 / 14</div>
+                                <div class="topline">Review rubric</div>
+                                <h1 class="title">Skill PR Checklist By Review Area</h1>
+                                <p class="lead">Each area features a targeted quality bar. The list reveals exact approval wording.</p>
+
+                                <div class="checklist-workbench" data-checklist-workbench>
+                                        <div class="checklist-list">
+                                                <article class="panel checklist-topic theme-cyan panel-strong" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show pre-submission checklist area">
+                                                                <span class="checklist-topic-tag">Pre-Submission</span>
+                                                                <p class="checklist-topic-summary">Pre-Submission Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Pre-Submission</span>
+                                                                               <span class="checklist-detail-index">01</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Built with <code>skill-creator</code></p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Was <code>skill-creator</code> used before the PR, not just after problems were found?</li>
+                                                                               <li>Did the author use <code>skill-creator</code> to draft evals, compare baseline behavior, and improve the skill iteratively?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-teal" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show triggering checklist area">
+                                                                <span class="checklist-topic-tag">Triggering</span>
+                                                                <p class="checklist-topic-summary">Triggering Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Triggering</span>
+                                                                               <span class="checklist-detail-index">02</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Clear frontmatter description</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Does it include realistic trigger phrases and user wording?</li>
+                                                                               <li>Does it include non-trigger cases so the skill does not overfire?</li>
+                                                                               <li>Was the description refined through <code>skill-creator</code> iteration rather than left as a first draft?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-orange" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show top-level skill file checklist area">
+                                                                <span class="checklist-topic-tag">Top-Level Skill File</span>
+                                                                <p class="checklist-topic-summary">Top-Level Skill File Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Top-Level Skill File</span>
+                                                                               <span class="checklist-detail-index">03</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Short and scannable <code>SKILL.md</code></p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Does it define the expected outcome?</li>
+                                                                               <li>Does it define stop gates or applicability checks?</li>
+                                                                               <li>Does it define the required workflow order?</li>
+                                                                               <li>Does it say when the model must ask questions, plan, wait for approval, or implement?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-pink" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show structure checklist area">
+                                                                <span class="checklist-topic-tag">Structure</span>
+                                                                <p class="checklist-topic-summary">Structure Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Structure</span>
+                                                                               <span class="checklist-detail-index">04</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Instructions in <code>references/</code></p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Are output formats or generated artifacts separated into <code>templates/</code>?</li>
+                                                                               <li>Do supporting files say when they should be used?</li>
+                                                                               <li>Is there a clean split between workflow, reference material, examples, and templates?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-purple" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show behavioral quality checklist area">
+                                                                <span class="checklist-topic-tag">Behavioral Quality</span>
+                                                                <p class="checklist-topic-summary">Behavioral Quality Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Behavioral Quality</span>
+                                                                               <span class="checklist-detail-index">05</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Clear boundaries and guardrails</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Does it avoid silent assumptions where user confirmation is required?</li>
+                                                                               <li>Does it require approval before editing if the workflow is plan-gated?</li>
+                                                                               <li>Does it define required deliverables such as summaries, plans, or reports?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-gold" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show eval coverage checklist area">
+                                                                <span class="checklist-topic-tag">Eval Coverage</span>
+                                                                <p class="checklist-topic-summary">Eval Coverage Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Eval Coverage</span>
+                                                                               <span class="checklist-detail-index">06</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Includes <code>evals/evals.json</code></p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Are there realistic positive-path evals?</li>
+                                                                               <li>Are there negative-path evals where the skill should refuse or stop?</li>
+                                                                               <li>Are there guardrail evals for sequencing rules like plan-before-approval?</li>
+                                                                               <li>Are there regression evals for previously fixed mistakes?</li>
+                                                                               <li>If relevant, are there extension/minimal-change evals for repos that already have partial implementation?</li>
+                                                                               <li>Do the evals look like they were written as part of the <code>skill-creator</code> workflow rather than retrofitted just before review?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-slate panel-strong" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show fixtures checklist area">
+                                                                <span class="checklist-topic-tag">Fixtures</span>
+                                                                <p class="checklist-topic-summary">Fixtures Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Fixtures</span>
+                                                                               <span class="checklist-detail-index">07</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Realistic starting states</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Are there enough variants to test different repo conditions?</li>
+                                                                               <li>Are fixtures minimal but compilable when code generation is involved?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-rose" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show benchmarking checklist area">
+                                                                <span class="checklist-topic-tag">Benchmarking</span>
+                                                                <p class="checklist-topic-summary">Benchmarking Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Benchmarking</span>
+                                                                               <span class="checklist-detail-index">08</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Benchmarked against baselines</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Are assertions discriminating, or would baseline behavior pass too easily?</li>
+                                                                               <li>Do benchmark results show the skill adds value rather than just producing output?</li>
+                                                                               <li>Is there evidence that <code>skill-creator</code> was used to drive those comparisons and improvements?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-cyan" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show hygiene checklist area">
+                                                                <span class="checklist-topic-tag">Hygiene</span>
+                                                                <p class="checklist-topic-summary">Hygiene Checks</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Hygiene</span>
+                                                                               <span class="checklist-detail-index">09</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Valid fixture projects</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>Are JSON files and templates valid?</li>
+                                                                               <li>Were temporary benchmark outputs, generated workspaces, and <code>bin/obj</code> artifacts removed from the PR?</li>
+                                                                               <li>Is the final diff focused on reusable skill assets only?</li>
+                                                                               </ul>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+
+                                                <article class="panel checklist-topic theme-teal panel-strong approval-card" data-detail-card>
+                                                        <button class="checklist-topic-toggle" type="button" data-detail-trigger aria-pressed="false" aria-label="Show approval decision checklist area">
+                                                                <span class="checklist-topic-tag">Approval Decision</span>
+                                                                <p class="checklist-topic-summary">Approval Decision Criteria</p>
+                                                        </button>
+                                                        <template>
+                                                                <div class="checklist-detail-shell">
+                                                                        <p class="checklist-detail-kicker">Review area</p>
+                                                                        <div class="checklist-detail-top">
+                                                                               <span class="checklist-topic-tag">Approval Decision</span>
+                                                                               <span class="checklist-detail-index">10</span>
+                                                                        </div>
+                                                                        <p class="checklist-detail-question">Clear, safe, and reusable</p>
+                                                                        <div class="checklist-detail-content">
+                                                                               <div class="checklist-detail-columns">
+                                                                               <section class="checklist-detail-section">
+                                                                               <p class="checklist-detail-section-title">Approve</p>
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>easy to trigger correctly</li>
+                                                                               <li>hard to misapply</li>
+                                                                               <li>structured for maintainability</li>
+                                                                               <li>supported by realistic evals</li>
+                                                                               <li>cleanly packaged for reuse</li>
+                                                                               </ul>
+                                                                               </section>
+                                                                               <section class="checklist-detail-section">
+                                                                               <p class="checklist-detail-section-title">Request changes</p>
+                                                                               <ul class="checklist-detail-list">
+                                                                               <li>monolithic</li>
+                                                                               <li>vague about triggering</li>
+                                                                               <li>missing stop gates</li>
+                                                                               <li>untested or weakly tested</li>
+                                                                               <li>not iterated with <code>skill-creator</code> before review</li>
+                                                                               <li>cluttered with generated artifacts</li>
+                                                                               </ul>
+                                                                               </section>
+                                                                               </div>
+                                                                        </div>
+                                                                </div>
+                                                        </template>
+                                                </article>
+                                        </div>
+
+                                        <aside class="panel panel-glow checklist-detail theme-cyan panel-strong" data-detail-panel>
+                                                <div class="checklist-detail-shell">
+                                                        <div class="checklist-detail-top">
+                                                                <span class="checklist-topic-tag">Checklist</span>
+                                                                <span class="checklist-detail-index">00</span>
+                                                        </div>
+                                                        <p class="checklist-detail-question">Hover a row to inspect the full approval criteria.</p>
+                                                        <div class="checklist-detail-content" data-detail-content>
+                                                                <p class="checklist-detail-empty">The detail panel stays anchored on the right so the checklist is easier to scan without cards jumping around the slide.</p>
+                                                        </div>
+                                                </div>
+                                        </aside>
+                                </div>
+                        </section>
+
+                        <footer class="footer">
+                                <div class="brand">
+                                        <img src="assets/payoneer-mark.svg" alt="">
+                                        <span class="brand-name">Payoneer</span>
+                                </div>
+                                <span class="footer-note">Review by subject, not by guesswork</span>
+                        </footer>
+                        <a href="https://dev.azure.com/Payoneer/Payoneer/_git/infrastructure-ai-assets?path=%2Fdocs%2FSkill%20PR%20Review%20Checklist.md&version=GBmaster&_a=contents" target="_blank" style="position: absolute; right: 54px; bottom: 44px; color: var(--accent-cyan); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; font-family: var(--font-family); z-index: 10;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                infrastructure-ai-assets / docs / Skill PR Review Checklist.md
+                        </a>
+
+                        <a class="nav-arrow" data-nav-next aria-label="Next slide">
+                                <svg viewBox="0 0 24 24"><path d="M8 5L16 12L8 19"/></svg>
+                        </a>
+                </main>
+        </div>
+</body>
+</html>
+
+
+

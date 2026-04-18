@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Template - Closing/Q&A</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; }
+        
+        /* Dark mode (default) */
+        :root {
+            --body-bg: #0a0e1a;
+            --slide-bg: linear-gradient(135deg, #0a2f35 0%, #0f1e3d 50%, #1a1438 100%);
+            --slide-shadow: 0 25px 80px rgba(0,0,0,0.4), 0 10px 30px rgba(0,0,0,0.3);
+            --blob-tl-opacity: 0.3;
+            --blob-tr-opacity: 0.25;
+            --blob-bl-opacity: 0.2;
+            --content-bg: transparent;
+            --title-gradient: linear-gradient(90deg, #38bdf8 0%, #a78bfa 50%, #f0abfc 100%);
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --card-bg: rgba(255,255,255,0.05);
+            --card-border: rgba(255,255,255,0.1);
+            --logo-text-color: #d1d5db;
+        }
+
+        /* Light mode */
+        :root.light-mode {
+            --body-bg: #e5e7eb;
+            --slide-bg: white;
+            --slide-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1);
+            --blob-tl-opacity: 0.7;
+            --blob-tr-opacity: 0.7;
+            --blob-bl-opacity: 0.5;
+            --content-bg: radial-gradient(ellipse at center, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 100%);
+            --title-gradient: linear-gradient(90deg, #0099e6 0%, #8b5cf6 50%, #e94b9e 100%);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --card-bg: white;
+            --card-border: #f3f4f6;
+            --logo-text-color: #6b7280;
+        }
+
+        body {
+            font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--body-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            transition: background 0.3s ease;
+        }
+
+        .slide-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
+        
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: var(--slide-bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--slide-shadow);
+            transform: scale(0.65);
+            border-radius: 8px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @media (max-width: 1000px) { .slide { transform: scale(0.45); } }
+        @media (min-width: 1400px) { .slide { transform: scale(0.7); } }
+        @media (min-width: 1920px) { .slide { transform: scale(0.95); } }
+
+        /* Decorative gradient blobs */
+        .blob-top-left { position: absolute; top: -400px; left: -400px; width: 700px; height: 700px; background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); border-radius: 40% 60% 50% 50%; opacity: var(--blob-tl-opacity); filter: blur(80px); transition: opacity 0.3s ease; }
+        .blob-top-right { position: absolute; top: -300px; right: -300px; width: 600px; height: 600px; background: linear-gradient(225deg, #a855f7 0%, #ec4899 100%); border-radius: 50% 40% 60% 40%; opacity: var(--blob-tr-opacity); filter: blur(80px); transition: opacity 0.3s ease; }
+        .blob-bottom-left { position: absolute; bottom: -200px; left: -150px; width: 500px; height: 500px; background: linear-gradient(135deg, #f472b6 0%, #fbbf24 100%); border-radius: 50%; opacity: var(--blob-bl-opacity); filter: blur(70px); transition: opacity 0.3s ease; }
+
+        .content { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--content-bg); transition: background 0.3s ease; }
+        .content-inner { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; padding: 120px; justify-content: center; align-items: center; text-align: center; }
+        
+        /* Main Title */
+        .title {
+            font-size: 140px;
+            font-weight: 700;
+            font-family: 'Avenir Next LT Pro Demi', sans-serif;
+            background: var(--title-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            letter-spacing: -3px;
+            transition: background 0.3s ease;
+        }
+        
+        .subtitle {
+            font-size: 36px;
+            color: var(--text-muted);
+            margin-bottom: 80px;
+            transition: color 0.3s ease;
+        }
+        
+        /* Contact Info Card */
+        .contact-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 50px 80px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        .contact-info { text-align: left; }
+        .contact-name { font-size: 36px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; transition: color 0.3s ease; }
+        .contact-title { font-size: 24px; color: var(--text-muted); margin-bottom: 20px; transition: color 0.3s ease; }
+        .contact-details { display: flex; gap: 30px; }
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 20px; color: var(--text-secondary); transition: color 0.3s ease; }
+        .contact-item svg { width: 24px; height: 24px; stroke: #8b5cf6; fill: none; }
+
+        /* Discussion Topics */
+        .topics { display: flex; gap: 25px; margin-top: 60px; }
+        .topic {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px 35px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .topic:nth-child(1):hover { border-color: #3b82f6; }
+        .topic:nth-child(2):hover { border-color: #10b981; }
+        .topic:nth-child(3):hover { border-color: #8b5cf6; }
+
+        .topic-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .topic:nth-child(1) .topic-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .topic:nth-child(2) .topic-icon { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+        .topic:nth-child(3) .topic-icon { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+        .topic-icon svg { width: 26px; height: 26px; fill: none; }
+        .topic:nth-child(1) .topic-icon svg { stroke: #3b82f6; }
+        .topic:nth-child(2) .topic-icon svg { stroke: #10b981; }
+        .topic:nth-child(3) .topic-icon svg { stroke: #8b5cf6; }
+        .topic-text { font-size: 20px; font-weight: 600; color: var(--text-secondary); transition: color 0.3s ease; }
+
+        /* Footer */
+        .footer { position: absolute; bottom: 50px; left: 60px; display: flex; align-items: center; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 48px; height: 48px; }
+        .logo-text { font-family: 'Avenir Next LT Pro', sans-serif; color: var(--logo-text-color); font-weight: 500; font-size: 28px; transition: color 0.3s ease; }
+        
+        /* Thank you note */
+        .thank-you { position: absolute; bottom: 50px; right: 60px; font-size: 20px; color: var(--text-muted); z-index: 1000; transition: color 0.3s ease; }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+        :root.light-mode .theme-toggle { background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.2); }
+        :root.light-mode .theme-toggle:hover { background: rgba(0, 0, 0, 0.15); }
+
+        .theme-toggle svg { width: 22px; height: 22px; transition: transform 0.3s ease; }
+        .theme-toggle:hover svg { transform: rotate(15deg); }
+        .icon-moon { display: block; }
+        .icon-sun { display: none; }
+        :root.light-mode .icon-moon { display: none; }
+        :root.light-mode .icon-sun { display: block; }
+
+        </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#a78bfa" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <div class="slide-wrapper">
+        <div class="slide">
+            <!-- Gradient blobs -->
+            <div class="blob-top-left"></div>
+            <div class="blob-top-right"></div>
+            <div class="blob-bottom-left"></div>
+
+            <!-- Content -->
+            <div class="content"></div>
+            <div class="content-inner">
+                <div class="title">Questions?</div>
+                <div class="subtitle">Let's discuss your thoughts and ideas</div>
+                
+                <!-- Contact Card -->
+                <div class="contact-card">
+                    <div class="avatar">≡ƒæñ</div>
+                    <div class="contact-info">
+                        <div class="contact-name">Your Name</div>
+                        <div class="contact-title">Your Role, Department</div>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                your.email@payoneer.com
+                            </div>
+                            <div class="contact-item">
+                                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                Your Location
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discussion Topics -->
+                <div class="topics">
+                    <div class="topic">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <span class="topic-text">Questions</span>
+                    </div>
+                    <div class="topic">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="topic-text">Feedback</span>
+                    </div>
+                    <div class="topic">
+                        <div class="topic-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </div>
+                        <span class="topic-text">Next Steps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with Payoneer Logo -->
+            <div class="footer">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+                                <stop offset="25%" style="stop-color:#f7931e;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#00c896;stop-opacity:1" />
+                                <stop offset="75%" style="stop-color:#0099e6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#e94b9e;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="url(#logoGradient)" stroke-width="12"/>
+                    </svg>
+                    <span class="logo-text">Payoneer</span>
+                </div>
+            </div>
+
+            <div class="thank-you">Thank you for your attention!</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('light-mode');
+            const isLight = document.documentElement.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -6,6 +6,10 @@ This repository hosts a static HTML slide deck about skill evals and review work
 
 Open [slide-01-title.html](./slide-01-title.html) in a browser to preview the deck locally.
 
+## Pre-deployment sanity check
+
+Before each deployment or publish, run the manual sanity pass in [docs/deployment-sanity-checklist.md](./docs/deployment-sanity-checklist.md).
+
 ## Live presentation checklist
 
 - Open the deck in a Chromium-based browser (Edge or Chrome).
@@ -18,7 +22,7 @@ The deck now auto-fits a fixed 16:9 slide canvas to the available viewport, so i
 
 ## Repository layout
 
-- `slide-01-title.html` through `slide-13-closing.html`: individual slides
+- `slide-01-title.html` through `slide-14-closing.html`: individual slides
 - `deck.css`: shared presentation styles
 - `deck.js`: shared navigation, theme, and interactive behavior
 - `assets/payoneer-mark.svg`: shared brand asset

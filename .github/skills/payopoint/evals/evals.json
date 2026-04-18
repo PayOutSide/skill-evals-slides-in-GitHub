@@ -1,0 +1,77 @@
+{
+  "skill_name": "PayoPoint",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need a Payoneer exec deck about our new dispute automation rollout. Audience is leadership, goal is to secure approval for phase 2 funding, and I want around 8 HTML slides. I have not provided the key metrics yet, so start the workflow correctly and do not generate slides yet.",
+      "expected_output": "The assistant validates applicability, asks only the missing discovery questions, and does not generate slides before approval.",
+      "files": [],
+      "expectations": [
+        "The response recognizes the request as a Payoneer HTML presentation task.",
+        "The response asks only for missing information such as metrics, presenter details, or PWA preference instead of regenerating the entire brief.",
+        "The response does not claim that HTML slides were already generated."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Use the attached markdown draft and turn it into a Payoneer-branded HTML presentation for leadership. Keep it to 7 slides, add a next-steps slide, and show me the slide plan first. Do not generate HTML until I approve it.",
+      "expected_output": "The assistant normalizes the attached markdown into a concrete slide plan, maps slides to existing template types, and stops for approval.",
+      "files": [
+        "evals/files/executive-launch-review.md"
+      ],
+      "expectations": [
+        "The response presents a markdown deck plan with ordered slide types.",
+        "The response includes a next-steps slide in the proposed structure.",
+        "The response explicitly waits for approval before generating HTML files."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Use the attached markdown draft to create a Payoneer architecture presentation for the engineering org. Generate the HTML slides and include PWA mode because I need to present offline from my laptop.",
+      "expected_output": "The assistant generates slide files from existing templates and also wires the PWA wrapper because offline presentation mode was requested.",
+      "files": [
+        "evals/files/payments-platform-architecture.md"
+      ],
+      "expectations": [
+        "The implementation generates HTML slide files in deck order.",
+        "The implementation reuses existing slide templates rather than inventing a new format for every slide.",
+        "The implementation includes PWA output and explains how to open or serve it."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Build me a Payoneer presentation as a PowerPoint file I can edit in Keynote later.",
+      "expected_output": "The assistant stops early and explains that this skill targets HTML slides, not PowerPoint or Keynote authoring.",
+      "files": [],
+      "expectations": [
+        "The response explains that PayoPoint is for HTML-based presentations, not `.pptx` output.",
+        "The response does not pretend it can satisfy the request with this skill as-is.",
+        "The response redirects the user toward a more suitable format or workflow."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I need one 35-slide Payoneer program-review deck covering roadmap, architecture, metrics, retrospectives, org updates, and next-quarter planning. Use PayoPoint if it still fits.",
+      "expected_output": "The assistant applies the deck-size stop gate and recommends splitting the request into multiple focused decks before generation.",
+      "files": [],
+      "expectations": [
+        "The response identifies that the requested deck is outside the normal focused-deck scope.",
+        "The response recommends splitting the work into multiple decks or sections before generation.",
+        "The response does not immediately generate a 35-slide plan as if the stop gate did not exist."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Use the attached draft for a stakeholder update. Keep the existing story, map each slide to the nearest current template, and avoid inventing new slide types unless absolutely necessary.",
+      "expected_output": "The assistant preserves the draft story while selecting the nearest existing templates and minimizing structural churn.",
+      "files": [
+        "evals/files/stakeholder-quarterly-update.md"
+      ],
+      "expectations": [
+        "The response keeps the original story arc rather than replacing it with a completely different deck.",
+        "The response maps slides to existing template types.",
+        "The response avoids proposing unnecessary custom templates."
+      ]
+    }
+  ]
+}

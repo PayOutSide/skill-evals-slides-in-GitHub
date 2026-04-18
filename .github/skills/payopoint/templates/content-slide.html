@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Template - Content</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; }
+
+        /* Dark mode (default) */
+        :root {
+            --body-bg: #0a0e1a;
+            --slide-bg: linear-gradient(135deg, #0a2f35 0%, #0f1e3d 50%, #1a1438 100%);
+            --slide-shadow: 0 25px 80px rgba(0,0,0,0.4), 0 10px 30px rgba(0,0,0,0.3);
+            --blob-tl-opacity: 0.3;
+            --blob-tr-opacity: 0.25;
+            --content-bg: transparent;
+            --title-gradient: linear-gradient(90deg, #38bdf8 0%, #a78bfa 50%, #f0abfc 100%);
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --logo-text-color: #d1d5db;
+        }
+
+        /* Light mode */
+        :root.light-mode {
+            --body-bg: #e5e7eb;
+            --slide-bg: white;
+            --slide-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.1);
+            --blob-tl-opacity: 0.7;
+            --blob-tr-opacity: 0.7;
+            --content-bg: radial-gradient(ellipse at center, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 100%);
+            --title-gradient: linear-gradient(90deg, #0099e6 0%, #8b5cf6 50%, #e94b9e 100%);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --logo-text-color: #6b7280;
+        }
+
+        body {
+            font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--body-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            transition: background 0.3s ease;
+        }
+
+        .slide-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            background: var(--slide-bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--slide-shadow);
+            transform: scale(0.65);
+            border-radius: 8px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @media (max-width: 1000px) { .slide { transform: scale(0.45); } }
+        @media (min-width: 1400px) { .slide { transform: scale(0.7); } }
+        @media (min-width: 1920px) { .slide { transform: scale(0.95); } }
+
+        /* Decorative gradient blobs */
+        .blob-top-left {
+            position: absolute;
+            top: -400px;
+            left: -400px;
+            width: 700px;
+            height: 700px;
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            border-radius: 40% 60% 50% 50%;
+            opacity: var(--blob-tl-opacity);
+            filter: blur(80px);
+            transition: opacity 0.3s ease;
+        }
+
+        .blob-top-right {
+            position: absolute;
+            top: -300px;
+            right: -300px;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(225deg, #a855f7 0%, #ec4899 100%);
+            border-radius: 50% 40% 60% 40%;
+            opacity: var(--blob-tr-opacity);
+            filter: blur(80px);
+            transition: opacity 0.3s ease;
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            background: var(--content-bg);
+            transition: background 0.3s ease;
+        }
+
+        .content-inner {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 100px 120px 100px;
+        }
+
+        .title {
+            font-size: 72px;
+            font-weight: 700;
+            font-family: 'Avenir Next LT Pro Demi', sans-serif;
+            background: var(--title-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+            transition: background 0.3s ease;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .content-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-list li {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            padding-left: 40px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .content-list li::before {
+            content: "->";
+            position: absolute;
+            left: 0;
+            color: #8b5cf6;
+            font-weight: bold;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 50px;
+            left: 60px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .logo-text {
+            font-family: 'Avenir Next LT Pro', sans-serif;
+            color: var(--logo-text-color);
+            font-weight: 500;
+            font-size: 28px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            bottom: 50px;
+            right: 60px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0099e6 0%, #8b5cf6 50%, #e94b9e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-arrow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 9999; width: 44px; height: 44px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+        :root.light-mode .theme-toggle { background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.2); }
+        :root.light-mode .theme-toggle:hover { background: rgba(0, 0, 0, 0.15); }
+        .theme-toggle svg { width: 22px; height: 22px; transition: transform 0.3s ease; }
+        .theme-toggle:hover svg { transform: rotate(15deg); }
+        .icon-moon { display: block; }
+        .icon-sun { display: none; }
+        :root.light-mode .icon-moon { display: none; }
+        :root.light-mode .icon-sun { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#a78bfa" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="slide-wrapper">
+        <div class="slide">
+            <!-- Decorative blobs -->
+            <div class="blob-top-left"></div>
+            <div class="blob-top-right"></div>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="content-inner">
+                    <h1 class="title">Slide Title</h1>
+
+                    <div class="section">
+                        <h2 class="section-title">Key Points</h2>
+                        <ul class="content-list">
+                            <li>First key point with relevant details</li>
+                            <li>Second important observation</li>
+                            <li>Third critical insight</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Supporting Information</h2>
+                        <ul class="content-list">
+                            <li>Additional context or data</li>
+                            <li>Evidence or examples</li>
+                            <li>Implications or next steps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with Payoneer Logo -->
+            <div class="footer">
+                <div class="logo">
+                    <!-- Payoneer Logo: Use provided image file or fallback to SVG -->
+                    <!-- Option 1: Image file (uncomment and provide path) -->
+                    <!-- <img class="logo-icon" src="payoneer-logo.png" alt="Payoneer"> -->
+                    
+                    <!-- Option 2: SVG Logo (gradient ring matching Payoneer brand) -->
+                    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+                                <stop offset="25%" style="stop-color:#f7931e;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#00c896;stop-opacity:1" />
+                                <stop offset="75%" style="stop-color:#0099e6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#e94b9e;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="url(#logoGradient)" stroke-width="12"/>
+                    </svg>
+                    <span class="logo-text">Payoneer</span>
+                </div>
+            </div>
+
+            <!-- NAV_ARROW: Update href to next slide filename -->
+            <a href="#NEXT_SLIDE" class="nav-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M9 18l6-6-6-6" stroke="white" stroke-width="2.5" 
+                          fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('light-mode');
+            const isLight = document.documentElement.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Load saved theme preference
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        })();
+    </script>
+</body>
+</html>
