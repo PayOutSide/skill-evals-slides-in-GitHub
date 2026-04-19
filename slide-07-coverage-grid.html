@@ -33,71 +33,71 @@
                 <div class="slide-number">07 / 14</div>
                 <div class="topline">Quality bar</div>
                 <h1 class="title">Test Behavior, Boundaries, And Reuse</h1>
-                <p class="lead">A genuine eval suite proves happy-path success, true behavior, and scope boundaries.</p>
+                <p class="lead">These eval categories play the same role as test-case categories in traditional development: proving behavior, boundaries, and change safety.</p>
 
-                <div class="icon-grid">
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">P</div>
-                        <div class="icon-copy">
-                            <h3>Positive</h3>
-                            <ul class="icon-bullets">
-                                <li>Triggers correctly and produces expected results</li>
-                            </ul>
+                <div class="icon-grid" style="gap: 18px;">
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">P</div>
+                            <h3 style="margin: 0;">Positive</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Triggers correctly and produces expected results</li>
+                        </ul>
                     </article>
 
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">N</div>
-                        <div class="icon-copy">
-                            <h3>Negative</h3>
-                            <ul class="icon-bullets">
-                                <li>Refuses or redirects out-of-scope requests</li>
-                            </ul>
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">N</div>
+                            <h3 style="margin: 0;">Negative</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Refuses or redirects out-of-scope requests</li>
+                        </ul>
                     </article>
 
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">G</div>
-                        <div class="icon-copy">
-                            <h3>Guardrail</h3>
-                            <ul class="icon-bullets">
-                                <li>Stop gates and workflows are not bypassed</li>
-                                <li>Out-of-scope work is refused</li>
-                                <li>Required questions are asked in order</li>
-                            </ul>
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">G</div>
+                            <h3 style="margin: 0;">Guardrail</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Stop gates and workflows are not bypassed</li>
+                            <li>Out-of-scope work is refused</li>
+                            <li>Required questions are asked in order</li>
+                        </ul>
                     </article>
 
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">R</div>
-                        <div class="icon-copy">
-                            <h3>Regression</h3>
-                            <ul class="icon-bullets">
-                                <li>Previously solved cases keep passing</li>
-                            </ul>
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">R</div>
+                            <h3 style="margin: 0;">Regression</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Previously solved cases keep passing</li>
+                        </ul>
                     </article>
 
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">E</div>
-                        <div class="icon-copy">
-                            <h3>Extension</h3>
-                            <ul class="icon-bullets">
-                                <li>Can add capabilities without breaking core logic</li>
-                                <li>Uses <code>references/</code> and <code>templates/</code> correctly</li>
-                            </ul>
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">E</div>
+                            <h3 style="margin: 0;">Extension</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Can add capabilities without breaking core logic</li>
+                            <li>Uses <code>references/</code> and <code>templates/</code> correctly</li>
+                        </ul>
                     </article>
 
-                    <article class="panel icon-card">
-                        <div class="icon-symbol">M</div>
-                        <div class="icon-copy">
-                            <h3>Minimal change</h3>
-                            <ul class="icon-bullets">
-                                <li>Avoids unnecessary edits and extra work</li>
-                                <li>Keeps changes strictly within scope</li>
-                            </ul>
+                    <article class="panel icon-card" style="display: flex; flex-direction: column; gap: 14px; min-height: 210px; padding: 22px 22px 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="icon-symbol" style="width: 34px; height: 34px; border-radius: 12px; font-size: 14px; box-shadow: none; background: rgba(143, 189, 188, 0.10); border: 1px solid var(--theme-button-border);">M</div>
+                            <h3 style="margin: 0;">Minimal change</h3>
                         </div>
+                        <ul class="icon-bullets">
+                            <li>Avoids unnecessary edits and extra work</li>
+                            <li>Keeps changes strictly within scope</li>
+                        </ul>
                     </article>
                 </div>
             </section>

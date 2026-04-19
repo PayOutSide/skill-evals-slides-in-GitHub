@@ -35,8 +35,8 @@
                 <h1 class="title">Source Evals In The Skill, Artifacts Outside</h1>
                 <p class="lead">The skill owns source assets, while run outputs sit securely outside the repo.</p>
 
-                <div class="two-col">
-                    <div class="panel panel-strong tree-card">
+                <div class="two-col" style="align-items: stretch;">
+                    <div class="panel panel-strong tree-card" style="height: 100%;">
                         <div class="section-label">Repo tree</div>
                         <pre>.github/
 └── skills/
@@ -56,19 +56,19 @@ my-skill-workspace/
                         <p class="tree-caption" style="margin-top: 8px;">Source assets stay in the skill. Iteration output lives in a sibling workspace.</p>
                     </div>
 
-                    <div class="stack">
-                        <div class="callout-grid">
+                    <div class="stack" style="height: 100%;">
+                        <div class="callout-grid" style="height: 100%; grid-template-rows: repeat(3, minmax(0, 1fr));">
                             <article class="panel callout-card callout-card-compact">
                                 <h3>Source eval assets</h3>
-                                <p><span style="font-family: 'Cascadia Mono', Consolas, monospace;">evals/</span> and <span style="font-family: 'Cascadia Mono', Consolas, monospace;">evals/files/</span> hold prompts, fixtures, and expectations that should stay reviewable over time.</p>
+                                <p style="color: var(--text-2); font-size: 18px; line-height: 1.38;"><span style="font-family: 'Cascadia Mono', Consolas, monospace;">evals/</span> and <span style="font-family: 'Cascadia Mono', Consolas, monospace;">evals/files/</span> hold prompts, fixtures, and expectations that should stay reviewable over time.</p>
                             </article>
                             <article class="panel callout-card callout-card-compact">
                                 <h3>Behavior references</h3>
-                                <p><span style="font-family: 'Cascadia Mono', Consolas, monospace;">references/</span> and <span style="font-family: 'Cascadia Mono', Consolas, monospace;">templates/</span> define how the skill should reason and what it should reuse.</p>
+                                <p style="color: var(--text-2); font-size: 18px; line-height: 1.38;"><span style="font-family: 'Cascadia Mono', Consolas, monospace;">references/</span> and <span style="font-family: 'Cascadia Mono', Consolas, monospace;">templates/</span> define how the skill should reason and what it should reuse.</p>
                             </article>
                             <article class="panel callout-card callout-card-compact">
                                 <h3>Sibling workspaces hold generated runs</h3>
-                                <p>Benchmarks, review viewers, and per-run artifacts should not clutter the reusable skill package.</p>
+                                <p style="color: var(--text-2); font-size: 18px; line-height: 1.38;">Benchmarks, review viewers, and per-run artifacts should not clutter the reusable skill package.</p>
                             </article>
                         </div>
                     </div>

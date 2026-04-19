@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="deck.css">
     <script defer src="deck.js"></script>
 </head>
-<body data-prev="slide-09-ab-workflow.html" data-next="slide-11-eval-review-gallery.html">
+<body data-prev="slide-09-ab-workflow.html" data-next="slide-14-closing.html">
     <!-- Template mapping: table-slide -->
     <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark or light mode">
         <svg class="moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79Z" fill="#B8C6FF" stroke="#B8C6FF" stroke-width="1.6"/></svg>
@@ -35,118 +35,113 @@
                 <h1 class="title">Review Outputs And Benchmark Data Together</h1>
                 <p class="lead">Teams need qualitative output review and quantitative benchmarks to assess skill value.</p>
 
-                <div class="viewer-layout" style="gap: 18px;">
-                    <div class="stack" style="gap: 14px;">
-                        <div class="panel panel-muted mock-block" style="padding: 22px 24px;">
-                            <div class="section-label">Outputs</div>
-                            <ul class="mock-list">
-                                <li>Prompt text and run context for the selected eval case</li>
-                                <li>Generated files rendered inline where possible</li>
-                                <li>Formal grades from <span style="font-family: 'Cascadia Mono', Consolas, monospace;">grading.json</span></li>
-                                <li>Previous-output comparison when the prior iteration exists</li>
-                            </ul>
+                <div class="viewer-layout" style="grid-template-columns: 0.8fr 1.2fr; gap: 20px; align-items: stretch;">
+                    <div class="stack" style="gap: 20px; height: 100%;">
+                        <div class="panel panel-glow mock-block" style="padding: 26px 28px; min-height: 0; flex: 1.05 1 0; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <div class="section-label">What Reviewers Inspect</div>
+                                <h3 style="margin: 4px 0 14px; font-size: 34px; line-height: 1.15;">One workflow, two signals.</h3>
+                                <ul class="mock-list" style="margin-top: 0;">
+                                    <li>Outputs show prompt fidelity, rendered files, and grader evidence.</li>
+                                    <li>Feedback captures nuance that formal assertions miss.</li>
+                                    <li>Benchmarking shows whether the quality gain is worth the cost.</li>
+                                </ul>
+                            </div>
                         </div>
 
-                        <div class="panel panel-glow mock-block" style="padding: 22px 24px;">
-                            <div class="section-label">Reviewer input</div>
-                            <ul class="mock-list">
-                                <li>Feedback box that persists into <span style="font-family: 'Cascadia Mono', Consolas, monospace;">feedback.json</span></li>
-                                <li>Notes about ambiguity, variance, or low-value assertions</li>
-                                <li>Human judgment layered on top of formal grading</li>
-                            </ul>
+                        <div class="panel panel-muted mock-block" style="padding: 20px 24px; min-height: 0; flex: 0.95 1 0; display: flex; flex-direction: column; justify-content: center;">
+                            <div class="section-label">Inside The Review Demo</div>
+                            <div class="sequence" style="gap: 8px; margin-top: 12px;">
+                                <div class="sequence-item" style="grid-template-columns: 34px 1fr; gap: 12px; align-items: center;">
+                                    <div class="sequence-number" style="width: 34px; height: 34px; font-size: 15px; border-radius: 12px; background: rgba(143, 189, 188, 0.10); box-shadow: none; color: var(--title-color); border: 1px solid var(--theme-button-border);">1</div>
+                                    <p style="margin: 0; color: var(--text-2); font-size: 20px; line-height: 1.35;">Read the prompt, outputs, and formal grades together.</p>
+                                </div>
+                                <div class="sequence-item" style="grid-template-columns: 34px 1fr; gap: 12px; align-items: center;">
+                                    <div class="sequence-number" style="width: 34px; height: 34px; font-size: 15px; border-radius: 12px; background: rgba(143, 189, 188, 0.10); box-shadow: none; color: var(--title-color); border: 1px solid var(--theme-button-border);">2</div>
+                                    <p style="margin: 0; color: var(--text-2); font-size: 20px; line-height: 1.35;">Flip to the benchmark tab to compare with-skill and baseline runs.</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-start; margin-top: 18px;">
+                                <a href="review-demo.html" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; padding: 12px 22px; font-size: 17px; font-weight: 700; color: var(--canvas); background: var(--title-color); border: 1px solid var(--title-color); border-radius: 999px; text-decoration: none; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22); transition: filter .2s;">🔍 Open Eval Review Demo</a>
+                            </div>
                         </div>
+
                     </div>
 
-                    <div class="panel panel-strong mock-block" style="padding: 22px 24px;">
-                        <div class="section-label">Benchmark</div>
-                        <table class="benchmark-table">
-                            <thead>
-                                <tr>
-                                    <th>Config</th>
-                                    <th>Run</th>
-                                    <th>Pass Rate</th>
-                                    <th>P/F/T</th>
-                                    <th>Time (s)</th>
-                                    <th>Tokens</th>
-                                    <th>Tool Calls</th>
-                                    <th>Errors</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="row-with">
-                                    <td>with_skill</td>
-                                    <td>1</td>
-                                    <td>100%</td>
-                                    <td>5/0/5</td>
-                                    <td>41.8</td>
-                                    <td>3820</td>
-                                    <td>18</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr class="row-with">
-                                    <td>with_skill</td>
-                                    <td>2</td>
-                                    <td>80%</td>
-                                    <td>4/1/5</td>
-                                    <td>39.6</td>
-                                    <td>3650</td>
-                                    <td>17</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr class="row-avg">
-                                    <td>with_skill</td>
-                                    <td>Avg</td>
-                                    <td>90%</td>
-                                    <td>4.5/0.5/5</td>
-                                    <td>40.7</td>
-                                    <td>3735</td>
-                                    <td>17.5</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr class="row-without">
-                                    <td>without_skill</td>
-                                    <td>1</td>
-                                    <td>40%</td>
-                                    <td>2/3/5</td>
-                                    <td>27.4</td>
-                                    <td>2150</td>
-                                    <td>10</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr class="row-without">
-                                    <td>without_skill</td>
-                                    <td>2</td>
-                                    <td>20%</td>
-                                    <td>1/4/5</td>
-                                    <td>25.9</td>
-                                    <td>2070</td>
-                                    <td>9</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr class="row-avg">
-                                    <td>without_skill</td>
-                                    <td>Avg</td>
-                                    <td>30%</td>
-                                    <td>1.5/3.5/5</td>
-                                    <td>26.7</td>
-                                    <td>2110</td>
-                                    <td>9.5</td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="stack" style="gap: 0; height: 100%;">
+                        <div class="panel panel-strong mock-block" style="padding: 24px 26px; height: 100%;">
+                            <div style="display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 16px;">
+                                <div>
+                                    <div class="section-label">Benchmark (Sample)</div>
+                                    <h3 style="margin: 4px 0 0; font-size: 34px; line-height: 1.12;">Put benchmark evidence first, not last.</h3>
+                                </div>
+                                <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                                    <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.09); border: 1px solid var(--border); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2);">Summary</span>
+                                    <span style="padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3);">Per-Eval</span>
+                                </div>
+                            </div>
 
-                        <div class="delta-row" style="margin-top: 12px;">
-                            <span class="delta-pill">+60 pts pass rate</span>
-                            <span class="delta-pill">+14.0s time</span>
-                            <span class="delta-pill">+1625 tokens</span>
-                        </div>
+                            <div class="hero-metrics" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 14px;">
+                                <article class="metric-card" style="background: linear-gradient(180deg, rgba(16, 185, 129, 0.16), rgba(255,255,255,0.03));">
+                                    <div class="metric-label">Pass Rate</div>
+                                    <div class="metric-value">94%</div>
+                                    <p class="small-note" style="margin: 8px 0 0; color: var(--text-2);">vs 62% baseline<br><span style="color: var(--accent-teal); font-weight: 700;">+31.78 pts</span></p>
+                                </article>
+                                <article class="metric-card">
+                                    <div class="metric-label">Mean Time</div>
+                                    <div class="metric-value">127.0s</div>
+                                    <p class="small-note" style="margin: 8px 0 0; color: var(--text-2);">vs 118.8s baseline<br><span style="color: var(--text); font-weight: 700;">+8.2s</span></p>
+                                </article>
+                                <article class="metric-card">
+                                    <div class="metric-label">Mean Tokens</div>
+                                    <div class="metric-value">41.8k</div>
+                                    <p class="small-note" style="margin: 8px 0 0; color: var(--text-2);">vs 32.6k baseline<br><span style="color: var(--text); font-weight: 700;">+9212</span></p>
+                                </article>
+                            </div>
 
-                        <div class="panel panel-muted" style="margin-top: 12px; padding: 14px 18px;">
-                            <div class="section-label">Analyzer notes</div>
-                            <p class="small-note">Higher success and stronger behavior, but at an increased execution cost that now becomes visible and discussable.</p>
+                            <table class="benchmark-table" style="margin-top: 0;">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>With Skill</th>
+                                        <th>Without Skill</th>
+                                        <th>Delta</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="row-with">
+                                        <td>Pass Rate</td>
+                                        <td>94% ± 12%</td>
+                                        <td>62% ± 36%</td>
+                                        <td>+31.78</td>
+                                    </tr>
+                                    <tr class="row-avg">
+                                        <td>Time (s)</td>
+                                        <td>127.0 ± 61.0</td>
+                                        <td>118.8 ± 69.3</td>
+                                        <td>+8.2s</td>
+                                    </tr>
+                                    <tr class="row-avg">
+                                        <td>Tokens</td>
+                                        <td>41799.9 ± 10800.7</td>
+                                        <td>32587.6 ± 6972.3</td>
+                                        <td>+9212</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="panel panel-muted" style="margin-top: 12px; padding: 14px 18px; background: rgba(255,255,255,0.05);">
+                                <div class="section-label">Analyzer notes</div>
+                                <p class="small-note">57/61 passed with skill (93.6%) vs 33/61 baseline (61.8%). Better quality, higher cost: +8.2s and +9212 tokens.</p>
+                            </div>
+
                         </div>
                     </div>
+                </div>
+
+                <div class="banner-note" style="margin-top: 16px;">
+                    Use qualitative review to spot drift. Use the benchmark tab to decide if the skill is earning its keep.
                 </div>
             </section>
 

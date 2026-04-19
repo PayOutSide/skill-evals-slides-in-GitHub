@@ -35,8 +35,8 @@
                 <h1 class="title">Every Eval Leaves Reviewable Artifacts</h1>
                 <p class="lead">Outputs survive the run so teams can inspect metadata, timing, and benchmarks later.</p>
 
-                <div class="artifact-layout">
-                    <div class="panel panel-strong tree-card artifact-tree">
+                <div class="artifact-layout" style="align-items: stretch;">
+                    <div class="panel panel-strong tree-card artifact-tree" style="height: 100%;">
                         <div class="section-label">Iteration output tree</div>
                         <pre>my-skill-workspace/
 └── iteration-1/
@@ -58,23 +58,23 @@
                         <p class="tree-caption" style="margin-top: 12px;">Runs live outside the skill repo. Keep the benchmark, document the findings, then clean up the workspace.</p>
                     </div>
 
-                    <div class="stack artifact-stack">
-                        <div class="callout-grid">
+                    <div class="stack artifact-stack" style="height: 100%;">
+                        <div class="callout-grid" style="height: 100%; grid-template-rows: repeat(4, minmax(0, 1fr));">
                             <article class="panel callout-card">
                                 <h3><span style="font-family: 'Cascadia Mono', Consolas, monospace;">eval_metadata.json</span></h3>
-                                <p>Prompt metadata, case identity, and run context that make the execution traceable.</p>
+                                <p style="color: var(--text-2); font-size: 20px; line-height: 1.4;">Prompt metadata, case identity, and run context that make the execution traceable.</p>
                             </article>
                             <article class="panel callout-card">
                                 <h3>Separate skill and baseline outputs</h3>
-                                <p>Keep generated files, timing, and grading isolated for each configuration, outside the reusable skill package.</p>
+                                <p style="color: var(--text-2); font-size: 20px; line-height: 1.4;">Keep generated files, timing, and grading isolated for each configuration, outside the reusable skill package.</p>
                             </article>
                             <article class="panel callout-card">
                                 <h3>Iteration summary artifacts</h3>
-                                <p>Combine metrics, timing, benchmark deltas, and reviewer feedback into a clean iteration summary.</p>
+                                <p style="color: var(--text-2); font-size: 20px; line-height: 1.4;">Combine metrics, timing, benchmark deltas, and reviewer feedback into a clean iteration summary.</p>
                             </article>
                             <article class="panel callout-card">
                                 <h3>Parallel iterations</h3>
-                                <p>Each eval can run in parallel multiple times and compare. These runs belong outside the skill's source files—just run, evaluate, and clean up.</p>
+                                <p style="color: var(--text-2); font-size: 20px; line-height: 1.4;">Each eval can run in parallel multiple times and compare. These runs belong outside the skill's source files—just run, evaluate, and clean up.</p>
                             </article>
                         </div>
 
